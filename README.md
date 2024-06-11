@@ -66,3 +66,9 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 URL_SERVER_API="http://localhost:8000/api"
+git init
+git add .
+git commit -m "Nombre del commit"
+git remote add origin https://github.com/cecimad/mantboxApp
+git push -u origin master
+git pull origin master
