@@ -81,6 +81,8 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
+                <!-- Mensajes de error -->
+                <div id="error-messages" class="alert alert-danger d-none"></div>
                 <!-- Formulario -->
                 <form id="createUserForm">
                     <!-- Campo para el nombre -->
@@ -108,7 +110,9 @@
                         <label for="rol" class="form-label">Rol</label>
                         <select class="form-select" id="rol" name="rol[]" multiple required>
                             <!-- Aquí puedes colocar opciones para los roles -->
-                            <option value="admin">Administrador</option>
+                            <option value="super-admin">Super Admin</option>
+                            <option value="admin">Admin</option>
+                            <option value="Supervisor">Supervisor</option>
                             <option value="user">Usuario</option>
                         </select>
                     </div>

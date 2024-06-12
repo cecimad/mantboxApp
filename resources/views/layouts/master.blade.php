@@ -309,7 +309,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="" class="sidebar-link">
+                  <a href="{{ route('empresas') }}" class="sidebar-link">
                     <i class="mdi mdi-adjust"></i>
                     <span class="hide-menu"> Empresas </span>
                   </a>
