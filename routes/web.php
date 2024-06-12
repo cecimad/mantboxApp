@@ -21,4 +21,5 @@ Route::get('/usuarios', [UsersController::class, 'usuarios'])->name('usuarios');
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 Route::get('/usuarios/edit/{id}', [UsersController::class, 'edit'])->name('usuarios.edit');
 Route::delete('/usuarios/delete/{id}', [UsersController::class, 'destroy'])->name('usuarios.destroy');
+Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
 

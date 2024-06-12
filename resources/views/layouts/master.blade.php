@@ -266,7 +266,7 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="#"><i data-feather="settings" class="feather-sm text-warning me-1 ms-1"></i>Account Setting</a> -->
                 <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#"><i data-feather="log-out" class="feather-sm text-danger me-1 ms-1"></i>Logout</a>
+                <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="log-out" class="feather-sm text-danger me-1 ms-1"></i>Logout</a>
                 <div class="dropdown-divider"></div>
                 <div class="p-2"><a href="{{ route('profile') }}" class="btn d-block w-100 btn-primary rounded-pill">View Profile</a>
                 </div>

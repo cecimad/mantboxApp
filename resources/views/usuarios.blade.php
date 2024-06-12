@@ -71,9 +71,52 @@
         </div>
     </div>
 </div>
-<div class="container">
-    <h1>Usuarios</h1>
 
-
+<!-- Modal -->
+<div class="modal fade" id="createmodel" tabindex="-1" aria-labelledby="createmodelLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createmodelLabel">Crear Nuevo Usuario</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Formulario -->
+                <form id="createUserForm">
+                    <!-- Campo para el nombre -->
+                    <div class="mb-3">
+                        <label for="name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="name" name="name" required>
+                    </div>
+                    <!-- Campo para el email -->
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Correo Electrónico</label>
+                        <input type="email" class="form-control" id="email" name="email" required>
+                    </div>
+                    <!-- Campo para la contraseña -->
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <!-- Confirmar contraseña -->
+                    <div class="mb-3">
+                        <label for="password_confirm" class="form-label">Confirmar Contraseña</label>
+                        <input type="password" class="form-control" id="password_confirm" name="password_confirm" required>
+                    </div>
+                    <!-- Selección del rol -->
+                    <div class="mb-3">
+                        <label for="rol" class="form-label">Rol</label>
+                        <select class="form-select" id="rol" name="rol[]" multiple required>
+                            <!-- Aquí puedes colocar opciones para los roles -->
+                            <option value="admin">Administrador</option>
+                            <option value="user">Usuario</option>
+                        </select>
+                    </div>
+                    <!-- Botón para enviar el formulario -->
+                    <button type="submit" class="btn btn-primary">Crear Usuario</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection

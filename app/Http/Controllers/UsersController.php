@@ -75,6 +75,28 @@ class UsersController extends Controller
         }
     }
 
+    public function logout(Request $request)
+    {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1');
+
+        // Obtener el token de la sesión
+        $bearerToken = session('bearer_token');
+
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $bearerToken, // Incluir el token de portador en el encabezado Authorization
+        ])->get($url . '/logout');
+
+        $data = $response->json();
+
+        if ($data['success']) {
+            // Si la solicitud de perfil es exitosa, carga la vista de perfil con los datos.
+            return view('/login', compact('data'));
+        } else {
+            // Si la solicitud de perfil falla, regresa con un mensaje de error.
+            return back()->withErrors(['message' => $data['message']]);
+        }
+    }
+
     public function edit($id)
     {
         // Lógica para editar el usuario con el ID proporcionado
