@@ -239,7 +239,7 @@
             <!-- ============================================================== -->
             <!-- User profile and search -->
             <!-- ============================================================== -->
-           
+
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle waves-effect waves-dark pro-pic" href="" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img src="../../package/assets/images/users/2.jpg" alt="user" class="rounded-circle" width="40" />
@@ -253,12 +253,12 @@
                   <div class="">
                     <img src="../../package/assets/images/users/5.jpg" alt="user" class="rounded-circle" width="60" />
                   </div>
-                  
+
                   <div class="ms-2">
                     <h4 class="mb-0 text-white">{{ session('userName') }}</h4>
                     <p class="mb-0">{{ session('userEmail') }}</p>
                   </div>
-                 
+
                 </div>
                 <a class="dropdown-item" href="{{ route('profile') }}"><i data-feather="user" class="feather-sm text-info me-1 ms-1"></i>Mi Perfil</a>
                 <!-- <a class="dropdown-item" href="#"><i data-feather="credit-card" class="feather-sm text-info me-1 ms-1"></i>My Balance</a>
@@ -702,27 +702,73 @@
   <script>
     feather.replace()
   </script>
-<!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 
-<script>
+  <script>
     // Llenar el modal de edición con los datos de la empresa seleccionada
-    $('#editmodel').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Botón que activó el modal
-        var id = button.data('id');
-        var name = button.data('name');
-        var address = button.data('address');
-        var phone = button.data('phone');
+    $('#editmodel').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget); // Botón que activó el modal
+      var id = button.data('id');
+      var name = button.data('name');
+      var address = button.data('address');
+      var phone = button.data('phone');
 
-        var modal = $(this);
-        modal.find('.modal-body #edit-id').val(id);
-        modal.find('.modal-body #edit-name').val(name);
-        modal.find('.modal-body #edit-address').val(address);
-        modal.find('.modal-body #edit-phone').val(phone);
-        modal.find('form').attr('action', '/empresas/' + id); // Corregir la asignación de la acción del formulario
+      var modal = $(this);
+      modal.find('.modal-body #edit-id').val(id);
+      modal.find('.modal-body #edit-name').val(name);
+      modal.find('.modal-body #edit-address').val(address);
+      modal.find('.modal-body #edit-phone').val(phone);
+      modal.find('form').attr('action', '/empresas/' + id); // Corregir la asignación de la acción del formulario
     });
-</script>
+  </script>
+
+  <script>
+    $(document).ready(function() {
+      $('#createUserForm').on('submit', function(e) {
+        e.preventDefault();
+        var form = $(this);
+
+        $.ajax({
+          url: form.attr('action'),
+          method: 'POST',
+          data: form.serialize(),
+          success: function(response) {
+            if (response.success) {
+              // Si la creación del usuario es exitosa, redirige a la vista de usuarios
+              window.location.href = '/usuarios';
+            } else {
+              // Si hay errores, muéstralos en el modal
+              var errorMessages = $('#error-messages');
+              errorMessages.html('');
+              errorMessages.removeClass('d-none');
+
+              if (response.message.email) {
+                errorMessages.append('<p>' + response.message.email[0] + '</p>');
+              }
+              if (response.message.password) {
+                errorMessages.append('<p>' + response.message.password[0] + '</p>');
+              }
+              if (response.message) {
+                errorMessages.append('<p>' + response.message + '</p>');
+              }
+            }
+          },
+          error: function(xhr) {
+            // Maneja los errores del servidor
+            var errorMessages = $('#error-messages');
+            errorMessages.html('');
+            errorMessages.removeClass('d-none');
+            var errors = xhr.responseJSON.errors;
+            $.each(errors, function(key, value) {
+              errorMessages.append('<p>' + value[0] + '</p>');
+            });
+          }
+        });
+      });
+    });
+  </script>
 </body>
 
 </html>
