@@ -27,6 +27,8 @@ Route::get('/usuarios/edit/{id}', [UsersController::class, 'edit'])->name('usuar
 Route::delete('/usuarios/delete/{id}', [UsersController::class, 'destroy'])->name('usuarios.destroy');
 Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
 Route::get('/empresas', [EmpresasController::class, 'getEmpresas'])->name('empresas');
-Route::get('/empresas/edit/{id}', [UsersController::class, 'edit'])->name('empresas.edit');
-Route::delete('/empresas/delete/{id}', [UsersController::class, 'destroy'])->name('empresas.destroy');
+Route::post('/empresas', [EmpresasController::class, 'store'])->name('empresas.store');
+Route::put('/empresas', [EmpresasController::class, 'update'])->name('empresas.update');
+Route::get('/empresas/{id}', [EmpresasController::class, 'edit'])->name('empresas.edit');
+Route::delete('/empresas/delete/{id}', [EmpresasController::class, 'destroy'])->name('empresas.destroy');
 

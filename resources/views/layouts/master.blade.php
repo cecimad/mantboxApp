@@ -769,6 +769,26 @@
       });
     });
   </script>
+
+  <script>
+    $(document).ready(function() {
+      $('.edit-company-button').click(function() {
+        // Obtener los datos de la empresa desde el botón
+        var id = $(this).data('id');
+        var name = $(this).data('name');
+        var address = $(this).data('address');
+        var phone = $(this).data('phone');
+
+        // Asignar los datos a los campos del formulario en la modal
+        $('#edit-company-id').val(id);
+        $('#edit-name').val(name);
+        $('#edit-address').val(address);
+        $('#edit-phone').val(phone);
+      });
+    });
+  </script>
+
+
 </body>
 
 </html>
