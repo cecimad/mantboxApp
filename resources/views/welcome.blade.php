@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, nice admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template" />
     <meta name="description" content="Nice is powerful and clean admin dashboard template" />
-    <title>Mobsign</title>
+    <title>MantBox</title>
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="../../package/assets/images/favicon.png" />
     <!-- Custom CSS -->

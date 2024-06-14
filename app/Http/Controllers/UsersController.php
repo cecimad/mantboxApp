@@ -69,10 +69,13 @@ class UsersController extends Controller
 
         if ($data['success']) {
             // Si la solicitud de perfil es exitosa, carga la vista de perfil con los datos.
-            return view('/usuarios', compact('data'));
+            $users = $data['data']['users'] ?? [];
+            return view('/usuarios', compact('users'));
         } else {
             // Si la solicitud de perfil falla, regresa con un mensaje de error.
-            return back()->withErrors(['message' => $data['message']]);
+            //return back()->withErrors(['message' => $data['message']]);
+            $users = $data['data']['users'] ?? [];
+            return view('/usuarios', compact('users'));
         }
     }
 
@@ -142,6 +145,29 @@ class UsersController extends Controller
 
         return redirect()->route('usuarios');
     }
+
+    public function passwordRecovery(Request $request)
+    {
+        $url = env('URL_SERVER_API', 'http://127.0.0.1');
+
+        // Obtener el token de la sesión
+        $bearerToken = session('bearer_token');
+
+        $response = Http::post($url . '/password/email', [
+            'email' => $request->input('email') // Asegúrate de obtener el email correctamente
+        ]);
+
+        $data = $response->json();
+
+        if (isset($data['success']) && $data['success']) {
+            // Si la solicitud es exitosa, carga la vista de login con los datos.
+            return view('login', compact('data'));
+        } else {
+            // Si la solicitud falla, regresa con un mensaje de error.
+            return back()->withErrors(['message' => $data['message']]);
+        }
+    }
+
 
 
 

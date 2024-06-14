@@ -41,7 +41,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data['data']['users'] as $user)
+                        @forelse ($users as $user)
                             <tr>
                                 <td class="text-left">{{ $user['name'] }}</td>
                                 <td class="text-left">{{ $user['email'] }}</td>
@@ -62,7 +62,11 @@
                                     </form>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="4" class="text-center">No hay usuarios registrados.</td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
 
