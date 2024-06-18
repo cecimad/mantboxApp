@@ -6,7 +6,7 @@ use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\LoginController;
-use App\Http\Controllers\EquiposController;
+use App\Http\Controllers\EquipmentsController;
 use App\Http\Controllers\MantenimientosController;
 
 Route::get('/', [UsersController::class, 'index']);
@@ -29,9 +29,10 @@ Route::post('/companies/update', [CompaniesController::class, 'update'])->name('
 Route::get('/companies/{id}', [CompaniesController::class, 'edit'])->name('companies.edit');
 Route::delete('/companies/delete/{id}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
 Route::post('/companies/select/{id}', [CompaniesController::class, 'selectEmpresa'])->name('companies.selectEmpresa');
-Route::get('/equipos', [EquiposController::class, 'getEquipos'])->name('equipos');
-Route::post('/equipos', [EquiposController::class, 'store'])->name('equipos.store');
-Route::post('/equipos', [EquiposController::class, 'update'])->name('equipos.update');
+Route::get('/equipments', [EquipmentsController::class, 'getEquipments'])->name('equipments');
+Route::post('/equipments', [EquipmentsController::class, 'store'])->name('equipments.store');
+Route::put('/equipments/update', [EquipmentsController::class, 'update'])->name('equipments.update');
+Route::delete('/equipments/delete/{id}', [EquipmentsController::class, 'destroy'])->name('equipments.destroy');
 Route::get('/login-google', [LoginController::class, 'redirectToGoogle'])->name('login-google');
 Route::get('/google-callback', [LoginController::class, 'handleGoogleCallback']);
 Route::get('/mantenimientos', [MantenimientosController::class, 'getmantenimientos'])->name('mantenimientos');

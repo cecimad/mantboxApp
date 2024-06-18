@@ -5,10 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class EquiposController extends Controller
+class EquipmentsController extends Controller
 {
     //
-    public function getEquipos(Request $request)
+    public function getEquipments(Request $request)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1');
 
@@ -25,13 +25,13 @@ class EquiposController extends Controller
             // Si la solicitud de perfil es exitosa, carga la vista de perfil con los datos.
             // Verifica si hay empresas, si no, asigna un arreglo vacío
             $equipments = $data['data']['equipos'] ?? [];
-            return view('/equipos', compact('equipments'));
+            return view('/equipments', compact('equipments'));
         } 
         else {
             // Si la solicitud de perfil falla, regresa con un mensaje de error.
             //return back()->withErrors(['message' => $data['message']]);
-            $equipments = $data['data']['equipments'] ?? [];
-            return view('/equipos', compact('equipments'));
+            $equipments = $data['data']['equipos'] ?? [];
+            return view('/equipments', compact('equipments'));
         }
     }
 
@@ -71,14 +71,14 @@ class EquiposController extends Controller
         return redirect()->back()->withErrors($errors)->withInput();
     }
 
-    return redirect()->route('equipos');
+    return redirect()->route('equipments');
 }
 
     public function update(Request $request)
     {
         // Validar los datos del formulario
         $validated = $request->validate([
-            'id' => 'required|exists:equipos,id',
+            'id' => 'required|exists:equipments,id',
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:100',
             'description' => 'required|string|max:500',
@@ -95,7 +95,7 @@ class EquiposController extends Controller
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $bearerToken,
-            ])->post($url . '/equipments/' . $validated['id'], [
+            ])->put($url . '/equipments/' . $validated['id'].'/', [
                 'name' => $validated['name'],
                 'code' => $validated['code'],
                 'description' => $validated['description'],
@@ -105,7 +105,7 @@ class EquiposController extends Controller
 
             if ($response->successful()) {
                 // Redirigir a la ruta 'empresas' si la solicitud es exitosa
-                return redirect()->route('equipos');
+                return redirect()->route('equipments');
             } else {
                 // Manejar otro tipo de respuesta (opcional)
                 return response()->json([
@@ -122,4 +122,35 @@ class EquiposController extends Controller
 
     }
 
+    public function destroy($id)
+    {
+        // Verificar si el ID proporcionado es numérico
+        if (!is_numeric($id)) {
+            abort(400, 'Invalid ID supplied');
+        }
+
+        // Lógica para eliminar el recurso en el servidor API
+        $bearerToken = session('bearer_token');
+
+        // URL del servidor API desde el archivo .env, con un valor por defecto
+        $url = env('URL_SERVER_API', 'http://127.0.0.1');
+
+        try {
+            // Realizar la solicitud HTTP DELETE con el token de autorización
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $bearerToken,
+            ])->delete($url . '/equipments/' . $id);
+
+            // Verificar si la solicitud fue exitosa
+            $response->throw(); // Lanza una excepción si la solicitud no fue exitosa
+
+        } catch (\Throwable $e) {
+            // Capturar errores de la solicitud HTTP
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->withErrors([$errorMessage])->withInput();
+        }
+
+        // Redireccionar a la ruta 'equipments' si la eliminación fue exitosa
+        return redirect()->route('equipments')->with('success', 'Equipo eliminado correctamente');
+    }
 }

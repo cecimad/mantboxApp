@@ -317,7 +317,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="{{ route('equipos') }}" class="sidebar-link">
+                  <a href="{{ route('equipments') }}" class="sidebar-link">
                     <i class="mdi mdi-adjust"></i>
                     <span class="hide-menu"> Equipos </span>
                   </a>
