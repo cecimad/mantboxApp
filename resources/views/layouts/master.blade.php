@@ -305,7 +305,7 @@
               </a>
               <ul aria-expanded="false" class="collapse first-level">
                 <li class="sidebar-item">
-                  <a href="{{ route('usuarios') }}" class="sidebar-link">
+                  <a href="{{ route('users') }}" class="sidebar-link">
                     <i class="mdi mdi-adjust"></i>
                     <span class="hide-menu"> Usuarios </span>
                   </a>
@@ -653,7 +653,7 @@
         <!-- End Tab 3 -->
       </div>
     </div>
-    
+
   </aside>
   <!-- ============================================================== -->
   <!-- End Wrapper -->
@@ -715,7 +715,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
 
-  <script>
+  <!-- <script>
     // Llenar el modal de edición con los datos de la empresa seleccionada
     $('#editmodel').on('show.bs.modal', function(event) {
       var button = $(event.relatedTarget); // Botón que activó el modal
@@ -731,7 +731,7 @@
       modal.find('.modal-body #edit-phone').val(phone);
       modal.find('form').attr('action', '/companies/' + id); // Corregir la asignación de la acción del formulario
     });
-  </script>
+  </script> -->
 
   <script>
     $(document).ready(function() {
@@ -745,8 +745,8 @@
           data: form.serialize(),
           success: function(response) {
             if (response.success) {
-              // Si la creación del usuario es exitosa, redirige a la vista de usuarios
-              window.location.href = '/usuarios';
+              // Si la creación del usuario es exitosa, redirige a la vista de users
+              window.location.href = '/users';
             } else {
               // Si hay errores, muéstralos en el modal
               var errorMessages = $('#error-messages');
@@ -797,29 +797,56 @@
     });
   </script>
 
-<script>document.addEventListener('DOMContentLoaded', function () {
-    const editButtons = document.querySelectorAll('.edit-equipment-button');
-    const modal = document.getElementById('editEquipmentModal');
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const editButtons = document.querySelectorAll('.edit-equipment-button');
+      const modal = document.getElementById('editEquipmentModal');
 
-    editButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            const id = this.getAttribute('data-id');
-            const name = this.getAttribute('data-name');
-            const code = this.getAttribute('data-code');
-            const description = this.getAttribute('data-description');
-            const installationDate = this.getAttribute('data-installation-date');
-            const location = this.getAttribute('data-location');
+      editButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const id = this.getAttribute('data-id');
+          const name = this.getAttribute('data-name');
+          const code = this.getAttribute('data-code');
+          const description = this.getAttribute('data-description');
+          const installationDate = this.getAttribute('data-installation-date');
+          const location = this.getAttribute('data-location');
 
-            document.getElementById('edit-equipment-id').value = id;
-            document.getElementById('edit-equipment-name').value = name;
-            document.getElementById('edit-equipment-code').value = code;
-            document.getElementById('edit-equipment-description').value = description;
-            document.getElementById('edit-installation-date').value = installationDate;
-            document.getElementById('edit-equipment-location').value = location;
+          document.getElementById('edit-equipment-id').value = id;
+          document.getElementById('edit-equipment-name').value = name;
+          document.getElementById('edit-equipment-code').value = code;
+          document.getElementById('edit-equipment-description').value = description;
+          document.getElementById('edit-installation-date').value = installationDate;
+          document.getElementById('edit-equipment-location').value = location;
         });
+      });
     });
-});
-</script>
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      var editUserButtons = document.querySelectorAll('.edit-user-button');
+
+      editUserButtons.forEach(function(button) {
+        button.addEventListener('click', function() {
+          var userId = button.getAttribute('data-id');
+          var userName = button.getAttribute('data-name');
+          var userEmail = button.getAttribute('data-email');
+          var userRoles = button.getAttribute('data-roles').split(',');
+
+          // Llenar los campos del formulario con los datos del usuario
+          document.getElementById('name').value = userName;
+          document.getElementById('email').value = userEmail;
+
+          // Marcar los roles seleccionados
+          var rolesSelect = document.getElementById('rol');
+          for (var i = 0; i < rolesSelect.options.length; i++) {
+            rolesSelect.options[i].selected = userRoles.includes(rolesSelect.options[i].value);
+          }
+        });
+      });
+    });
+  </script>
+
 </body>
 
 </html>
