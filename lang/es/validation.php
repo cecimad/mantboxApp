@@ -14,7 +14,7 @@ return [
     | como las reglas de tamaño. Siéntase libre de modificar cada uno de estos mensajes aquí.
     |
     */
-
+    'today' => 'hoy',
     'accepted' => 'El campo :attribute debe ser aceptado.',
     'accepted_if' => 'El campo :attribute debe ser aceptado cuando :other es :value.',
     'active_url' => 'El campo :attribute no es una URL válida.',
@@ -175,6 +175,30 @@ return [
         'attribute-name' => [
             'rule-name' => 'custom-message',
         ],
+        'start_date' => [
+            'after_or_equal' => 'El campo fecha de inicio debe ser una fecha posterior o igual al día de hoy',
+        ],
+        'frequency' => [
+            'required_if' => 'El campo frecuencia es requerido cuando se selecciona el campo recurrente.',
+        ],
+        'interval' => [
+            'required_if' => 'El campo intervalo es requerido cuando se selecciona el campo recurrente.',
+        ],
+        'days_of_week' => [
+            'required_if' =>'El campo días de la semana es requerido cuando el campo frecuencia es semanal.'
+        ],
+        'day_of_month' => [
+            'required_if' => 'El campo día del mes es requerido cuando el campo frecuencia es mensual.'
+        ],
+        'week_of_month' => [
+            'required_if' => 'El campo semana del mes es requerido cuando el campo frecuencia es mensual.'
+        ],
+        'day_of_week' => [
+            'required_if' => 'El campo día de la semana es requerido cuando el campo frecuencia es mensual.'
+        ],
+        'responsible_user_id' => [
+            'exists' => 'El valor seleccionado para el usuario a cargo no es válido.'
+        ],
     ],
 
     /*
@@ -188,6 +212,39 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'name' => 'nombre',
+        'email' => 'correo electrónico',
+        'password' => 'contraseña',
+        'roles' => 'rol',
+        'address' => 'dirección',
+        'phone' => 'teléfono',
+        'code' => 'código',
+        'description' => 'descripción',
+        'location' => 'ubicación',
+        'installation_date' => 'fecha de instalación',
+        'equipment_image' => 'imagen del equipo',
+        'technical_specifications' => 'especificaciones técnicas',
+        'company' => 'empresa',
+        'company_id' => 'empresa',
+        'type_name' => 'nombre',
+        'equipment_id' => 'equipo',
+        'maintenance_type_id' => 'tipo de mantenimiento',
+        'start_date' => 'fecha de inicio',
+        'end_date' => 'fecha de termino',
+        'frequency' => 'frecuencia',
+        'interval' => 'intervalo',
+        'days_of_week' => 'días de la semana',
+        'day_of_month' => 'día del mes',
+        'week_of_month' => 'semana del mes',
+        'day_of_week' => 'día de la semana',
+        'today' => 'hoy',
+        'is_recurring' => 'recurrente',
+        'maintenance_date' => 'fecha de mantenimiento',
+        'assigned_user_id' => 'usuario asignado',
+        'status' => 'estado',
+        'responsible_user_id ' => 'usuario a cargo',
+        'assigned_users' => 'usuarios asignados',
+    ],
 
 ];

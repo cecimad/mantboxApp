@@ -19,24 +19,56 @@
                         </div>
                     </div>
                 </div>
-                <table id="file_export" class="table table-bordered nowrap display">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th class="text-center">Nombre</th>
-                            <th class="text-center">Código</th>
-                            <th class="text-center">Descripción</th>
-                            <th class="text-center">Fecha Instalación</th>
-                            <th class="text-center">Ubicación</th>
-                            <th class="text-center">Acciones</th>
+                <div class="table-responsive">
+                    @if ($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
 
-                        </tr>
-                    </thead>
-                    <tbody>
+                    <table id="file_export" class="table table-bordered nowrap display">
+                        <thead class="thead-dark">
                             <tr>
-                                <td colspan="6" class="text-center">No hay Equipos registrados.</td>
+                                <th class="text-center">Nombre</th>
+                                <th class="text-center">Código</th>
+                                <th class="text-center">Descripción</th>
+                                <th class="text-center">Fecha Instalación</th>
+                                <th class="text-center">Ubicación</th>
+                                <th class="text-center">Acciones</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($equipments as $equipment)
+                            <tr>
+                                <td class="text-left">{{ $equipment['name'] }}</td>
+                                <td class="text-left">{{ $equipment['code'] }}</td>
+                                <td class="text-left">{{ $equipment['description'] }}</td>
+                                <td class="text-left">{{ $equipment['installation_date'] }}</td>
+                                <td class="text-left">{{ $equipment['location'] }}</td>
+                                <td class="text-center">
+                                    <a href="#" class="btn btn-primary btn-sm edit-equipment-button" data-bs-toggle="modal" data-bs-target="#editEquipmentModal" data-id="{{ $equipment['id'] }}" data-name="{{ $equipment['name'] }}" data-code="{{ $equipment['code'] }}" data-description="{{ $equipment['description'] }}" data-installation-date="{{ $equipment['installation_date'] }}" data-location="{{ $equipment['location'] }}">
+                                        Editar
+                                    </a>
+                                    <form action="{{ url('/equipos/delete', $equipment['id']) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6" class="text-center">No hay equipos registrados.</td>
+                            </tr>
+                            @endforelse
                         </tbody>
-                </table>
+                    </table>
+                </div>
+
             </div>
         </div>
     </div>
@@ -103,7 +135,7 @@
                 <!-- Formulario -->
                 <form id="editEquipmentForm" method="POST" action="{{ route('equipos.update') }}">
                     @csrf
-                    @method('PUT')
+                    @method('POST')
                     <!-- Campo para el nombre -->
                     <div class="mb-3">
                         <label for="edit-equipment-name" class="form-label">Nombre</label>

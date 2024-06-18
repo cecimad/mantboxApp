@@ -268,7 +268,9 @@
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}"><i data-feather="log-out" class="feather-sm text-danger me-1 ms-1"></i>Logout</a>
                 <div class="dropdown-divider"></div>
-                <div class="p-2"><a href="{{ route('profile') }}" class="btn d-block w-100 btn-primary rounded-pill">View Profile</a>
+                <div class="p-2"><a href="{{ route('profile') }}" class="btn d-block w-100 btn-primary rounded-pill">View Profile</a></div>
+                <div class="p-2">
+                  <a href="#" id="openModalBtn" class="btn d-block w-100 btn-primary rounded-pill">Seleccionar Empresa</a>
                 </div>
               </div>
             </li>
@@ -651,6 +653,7 @@
         <!-- End Tab 3 -->
       </div>
     </div>
+    
   </aside>
   <!-- ============================================================== -->
   <!-- End Wrapper -->
@@ -794,7 +797,38 @@
     });
   </script>
 
+<script>
+    $(document).ready(function() {
+        $('.edit-company-button').on('click', function() {
+            var empresa_id = $(this).data('id');
+            $('#empresa_id').val(empresa_id);
+        });
+    });
+</script>
 
+<script>document.addEventListener('DOMContentLoaded', function () {
+    const editButtons = document.querySelectorAll('.edit-equipment-button');
+    const modal = document.getElementById('editEquipmentModal');
+
+    editButtons.forEach(button => {
+        button.addEventListener('click', function () {
+            const id = this.getAttribute('data-id');
+            const name = this.getAttribute('data-name');
+            const code = this.getAttribute('data-code');
+            const description = this.getAttribute('data-description');
+            const installationDate = this.getAttribute('data-installation-date');
+            const location = this.getAttribute('data-location');
+
+            document.getElementById('edit-equipment-id').value = id;
+            document.getElementById('edit-equipment-name').value = name;
+            document.getElementById('edit-equipment-code').value = code;
+            document.getElementById('edit-equipment-description').value = description;
+            document.getElementById('edit-installation-date').value = installationDate;
+            document.getElementById('edit-equipment-location').value = location;
+        });
+    });
+});
+</script>
 </body>
 
 </html>

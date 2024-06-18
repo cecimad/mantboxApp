@@ -6,9 +6,6 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="keywords" content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, admin pro admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, " />
-  <meta name="description" content="Admin Pro is powerful and clean admin dashboard template" />
-  <meta name="robots" content="noindex,nofollow" />
   <title>Mobsign</title>
   <link rel="canonical" href="https://www.wrappixel.com/templates/niceadmin/" />
   <!-- Favicon icon -->
@@ -54,7 +51,23 @@
             no-repeat center center;
           background-size: cover;
         ">
+
       <div class="auth-box p-4 bg-white rounded">
+        @if (session('success'))
+        <div class="alert alert-success">
+          {{ session('success') }}
+        </div>
+        @endif
+
+        @if ($errors->any())
+        <div class="alert alert-danger">
+          <ul>
+            @foreach ($errors->all() as $error)
+            <li>{{ $error }}</li>
+            @endforeach
+          </ul>
+        </div>
+        @endif
         <div id="loginform">
           <div class="logo">
             <h3 class="box-title mb-3">Iniciar Sesión</h3>
@@ -179,6 +192,18 @@
       $("#recoverform").fadeIn();
     });
   </script>
+
+<script>
+    // Script to hide the success alert after 5 seconds
+    document.addEventListener('DOMContentLoaded', function() {
+        var successAlert = document.getElementById('success-alert');
+        if (successAlert) {
+            setTimeout(function() {
+                successAlert.style.display = 'none';
+            }, 5000); // 5000 milliseconds = 5 seconds
+        }
+    });
+</script>
 </body>
 
 </html>

@@ -147,26 +147,43 @@ class UsersController extends Controller
     }
 
     public function passwordRecovery(Request $request)
-    {
-        $url = env('URL_SERVER_API', 'http://127.0.0.1');
+{
+    $url = env('URL_SERVER_API', 'http://127.0.0.1');
 
-        // Obtener el token de la sesión
-        $bearerToken = session('bearer_token');
+    $response = Http::post($url . '/password/email', [
+        'email' => $request->input('email') // Asegúrate de obtener el email correctamente
+    ]);
 
-        $response = Http::post($url . '/password/email', [
-            'email' => $request->input('email') // Asegúrate de obtener el email correctamente
-        ]);
+    $data = $response->json();
 
-        $data = $response->json();
-
-        if (isset($data['success']) && $data['success']) {
-            // Si la solicitud es exitosa, carga la vista de login con los datos.
-            return view('login', compact('data'));
-        } else {
-            // Si la solicitud falla, regresa con un mensaje de error.
-            return back()->withErrors(['message' => $data['message']]);
-        }
+    if (isset($data['success']) && $data['success']) {
+        // Si la solicitud es exitosa, redirige a la vista de login con un mensaje de éxito.
+        return redirect()->route('login')->with('success', 'Correo de recuperación enviado. Sigue las instrucciones para continuar.');
+    } else {
+        // Si la solicitud falla, regresa con un mensaje de error.
+        return back()->withErrors(['message' => $data['message']]);
     }
+}
+
+public function password_Recovery()
+{
+    $url = env('URL_SERVER_API', 'http://127.0.0.1');
+    return view('/password_recovery');
+    // $response = Http::post($url . '/password/email', [
+    //     'email' => $request->input('email') // Asegúrate de obtener el email correctamente
+    // ]);
+
+    // $data = $response->json();
+
+    // if (isset($data['success']) && $data['success']) {
+    //     // Si la solicitud es exitosa, redirige a la vista de login con un mensaje de éxito.
+    //     return redirect()->route('login')->with('success', 'Correo de recuperación enviado. Sigue las instrucciones para continuar.');
+    // } else {
+    //     // Si la solicitud falla, regresa con un mensaje de error.
+    //     return back()->withErrors(['message' => $data['message']]);
+    // }
+}
+
 
 
 

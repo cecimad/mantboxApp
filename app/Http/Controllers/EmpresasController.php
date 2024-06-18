@@ -12,25 +12,24 @@ class EmpresasController extends Controller
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1');
 
-        // Obtener el token de la sesión
-        $bearerToken = session('bearer_token');
+        // Obtener el token de la sesión (esto puede variar dependiendo de cómo manejes la autenticación y el token)
+        $bearerToken = $request->session()->get('bearer_token');
 
+        // Hacer la solicitud a la API para obtener las empresas
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $bearerToken, // Incluir el token de portador en el encabezado Authorization
+            'Authorization' => 'Bearer ' . $bearerToken,
         ])->get($url . '/companies');
 
         $data = $response->json();
 
-        if ($data['success']) {
-            // Si la solicitud de perfil es exitosa, carga la vista de perfil con los datos.
-            // Verifica si hay empresas, si no, asigna un arreglo vacío
+        if ($response->successful()) {
+            // Si la solicitud es exitosa, obtener las empresas y mostrar la vista
             $companies = $data['data']['companies'] ?? [];
-            return view('/empresas', compact('companies'));
+            return view('empresas', compact('companies'));
         } else {
-            // Si la solicitud de perfil falla, regresa con un mensaje de error.
-            //return back()->withErrors(['message' => $data['message']]);
-            $companies = $data['data']['companies'] ?? [];
-            return view('/empresas', compact('companies'));
+            // Si hay un error, manejarlo adecuadamente (por ejemplo, redirigir o mostrar un mensaje de error)
+            $error_message = $data['message'] ?? 'Error al obtener las empresas.';
+            return back()->withErrors(['message' => $error_message]);
         }
     }
 
@@ -88,7 +87,7 @@ class EmpresasController extends Controller
         try {
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $bearerToken,
-            ])->put($url . '/companies/' . $validated['id'], [
+            ])->post($url . '/companies/' . $validated['id'], [
                 'name' => $validated['name'],
                 'address' => $validated['address'],
                 'phone' => $validated['phone'],
@@ -123,30 +122,68 @@ class EmpresasController extends Controller
         if (!is_numeric($id)) {
             abort(400, 'Invalid ID supplied');
         }
-    
+
         // Lógica para eliminar el recurso en el servidor API
         $bearerToken = session('bearer_token');
-    
+
         // URL del servidor API desde el archivo .env, con un valor por defecto
         $url = env('URL_SERVER_API', 'http://127.0.0.1');
-    
+
         try {
             // Realizar la solicitud HTTP DELETE con el token de autorización
             $response = Http::withHeaders([
                 'Authorization' => 'Bearer ' . $bearerToken,
             ])->delete($url . '/companies/' . $id);
-    
+
             // Verificar si la solicitud fue exitosa
             $response->throw(); // Lanza una excepción si la solicitud no fue exitosa
-    
+
         } catch (\Throwable $e) {
             // Capturar errores de la solicitud HTTP
             $errorMessage = $e->getMessage();
             return redirect()->back()->withErrors([$errorMessage])->withInput();
         }
-    
+
         // Redireccionar a la ruta 'empresas' si la eliminación fue exitosa
         return redirect()->route('empresas')->with('success', 'Empresa eliminada correctamente');
     }
-    
+
+    public function selectEmpresa($id)
+{
+    if (!is_numeric($id)) {
+        abort(400, 'Invalid ID supplied');
+    }
+
+    $url = env('URL_SERVER_API', 'http://127.0.0.1');
+
+    // Obtener el token de la sesión
+    $bearerToken = session('bearer_token');
+    try {
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $bearerToken, // Incluir el token de portador en el encabezado Authorization
+        ])->post($url . '/select-company', [
+            'company_id' => $id
+        ]);
+
+        // Verificar si la solicitud fue exitosa
+        $response->throw(); // Lanza una excepción si la solicitud no fue exitosa
+
+    } catch (\Throwable $e) {
+        // Capturar errores de la solicitud HTTP
+        $errorMessage = $e->getMessage();
+        return redirect()->back()->withErrors([$errorMessage])->withInput();
+    }
+
+    // Verificar el estado de la respuesta HTTP
+    if ($response->successful()) {
+        // Redireccionar a la ruta 'empresas' si la selección fue exitosa
+        return redirect()->route('empresas')->with('success', 'Empresa seleccionada correctamente');
+    } else {
+        // Manejar caso de respuesta no exitosa
+        $errorResponse = $response->json(); // Obtener el cuerpo de la respuesta JSON si hay errores específicos
+        $errorMessage = $errorResponse['message'] ?? 'Error al seleccionar la empresa';
+        return redirect()->back()->withErrors([$errorMessage])->withInput();
+    }
+}
+
 }

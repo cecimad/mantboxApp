@@ -46,6 +46,13 @@
                                 <td class="text-left">{{ $company['address'] }}</td>
                                 <td class="text-left">{{ $company['phone'] }}</td>
                                 <td class="text-center">
+                                    <form action="{{ url('/empresas/select', $company['id']) }}" method="POST" style="display:inline;">
+                                        @csrf
+                                        @method('POST')
+                                        <button type="submit" class="btn btn-success btn-sm">Seleccionar Empresa</button>
+                                    </form>
+
+
                                     <!-- <a href="{{ url('/empresas/update', $company['id']) }}" class="btn btn-primary btn-sm">Editar</a> -->
                                     <a href="#" class="btn btn-primary btn-sm edit-company-button" data-bs-toggle="modal" data-bs-target="#editCompanyModal" data-id="{{ $company['id'] }}" data-name="{{ $company['name'] }}" data-address="{{ $company['address'] }}" data-phone="{{ $company['phone'] }}">
                                         Editar
@@ -120,7 +127,7 @@
                 <!-- Formulario -->
                 <form id="editCompanyForm" method="POST" action="{{ route('empresas.update') }}">
                     @csrf
-                    @method('PUT')
+                    @method('POST')
                     <!-- Campo para el nombre -->
                     <div class="mb-3">
                         <label for="edit-name" class="form-label">Nombre</label>
