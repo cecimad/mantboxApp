@@ -311,7 +311,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="{{ route('empresas') }}" class="sidebar-link">
+                  <a href="{{ route('companies') }}" class="sidebar-link">
                     <i class="mdi mdi-adjust"></i>
                     <span class="hide-menu"> Empresas </span>
                   </a>
@@ -729,7 +729,7 @@
       modal.find('.modal-body #edit-name').val(name);
       modal.find('.modal-body #edit-address').val(address);
       modal.find('.modal-body #edit-phone').val(phone);
-      modal.find('form').attr('action', '/empresas/' + id); // Corregir la asignación de la acción del formulario
+      modal.find('form').attr('action', '/companies/' + id); // Corregir la asignación de la acción del formulario
     });
   </script>
 
@@ -796,15 +796,6 @@
       });
     });
   </script>
-
-<script>
-    $(document).ready(function() {
-        $('.edit-company-button').on('click', function() {
-            var empresa_id = $(this).data('id');
-            $('#empresa_id').val(empresa_id);
-        });
-    });
-</script>
 
 <script>document.addEventListener('DOMContentLoaded', function () {
     const editButtons = document.querySelectorAll('.edit-equipment-button');

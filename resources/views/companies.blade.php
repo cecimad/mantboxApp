@@ -46,18 +46,18 @@
                                 <td class="text-left">{{ $company['address'] }}</td>
                                 <td class="text-left">{{ $company['phone'] }}</td>
                                 <td class="text-center">
-                                    <form action="{{ url('/empresas/select', $company['id']) }}" method="POST" style="display:inline;">
+                                    <form action="{{ url('/companies/select', $company['id']) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('POST')
                                         <button type="submit" class="btn btn-success btn-sm">Seleccionar Empresa</button>
                                     </form>
 
 
-                                    <!-- <a href="{{ url('/empresas/update', $company['id']) }}" class="btn btn-primary btn-sm">Editar</a> -->
+                                    <!-- <a href="{{ url('/companies/update', $company['id']) }}" class="btn btn-primary btn-sm">Editar</a> -->
                                     <a href="#" class="btn btn-primary btn-sm edit-company-button" data-bs-toggle="modal" data-bs-target="#editCompanyModal" data-id="{{ $company['id'] }}" data-name="{{ $company['name'] }}" data-address="{{ $company['address'] }}" data-phone="{{ $company['phone'] }}">
                                         Editar
                                     </a>
-                                    <form action="{{ url('/empresas/delete', $company['id']) }}" method="POST" style="display:inline;">
+                                    <form action="{{ url('/companies/delete', $company['id']) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
@@ -66,7 +66,7 @@
                             </tr>
                             @empty
                             <tr>
-                                <td colspan="4" class="text-center">No hay empresas registradas.</td>
+                                <td colspan="4" class="text-center">No hay companies registradas.</td>
                             </tr>
                             @endforelse
                         </tbody>
@@ -89,7 +89,7 @@
                 <!-- Mensajes de error -->
                 <div id="error-messages" class="alert alert-danger d-none"></div>
                 <!-- Formulario -->
-                <form id="createCompanyForm" action="{{ route('empresas.store') }}" method="POST">
+                <form id="createCompanyForm" action="{{ route('companies.store') }}" method="POST">
                     @csrf
                     <!-- Campo para el nombre -->
                     <div class="mb-3">
@@ -125,7 +125,7 @@
                 <!-- Mensajes de error -->
                 <div id="edit-error-messages" class="alert alert-danger d-none"></div>
                 <!-- Formulario -->
-                <form id="editCompanyForm" method="POST" action="{{ route('empresas.update') }}">
+                <form id="editCompanyForm" method="POST" action="{{ route('companies.update') }}">
                     @csrf
                     @method('POST')
                     <!-- Campo para el nombre -->

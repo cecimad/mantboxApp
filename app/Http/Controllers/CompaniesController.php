@@ -5,17 +5,17 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
-class EmpresasController extends Controller
+class CompaniesController extends Controller
 {
     //
-    public function getEmpresas(Request $request)
+    public function getCompanies(Request $request)
     {
         $url = env('URL_SERVER_API', 'http://127.0.0.1');
 
         // Obtener el token de la sesión (esto puede variar dependiendo de cómo manejes la autenticación y el token)
         $bearerToken = $request->session()->get('bearer_token');
 
-        // Hacer la solicitud a la API para obtener las empresas
+        // Hacer la solicitud a la API para obtener las companies
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $bearerToken,
         ])->get($url . '/companies');
@@ -23,13 +23,16 @@ class EmpresasController extends Controller
         $data = $response->json();
 
         if ($response->successful()) {
-            // Si la solicitud es exitosa, obtener las empresas y mostrar la vista
+            // Si la solicitud es exitosa, obtener las companies y mostrar la vista
             $companies = $data['data']['companies'] ?? [];
-            return view('empresas', compact('companies'));
+            return view('companies', compact('companies'));
         } else {
             // Si hay un error, manejarlo adecuadamente (por ejemplo, redirigir o mostrar un mensaje de error)
-            $error_message = $data['message'] ?? 'Error al obtener las empresas.';
-            return back()->withErrors(['message' => $error_message]);
+            //$error_message = $data['message'] ?? 'Error al obtener las companies.';
+            //return back()->withErrors(['message' => $error_message]);
+
+            $companies = $data['data']['companies'] ?? [];
+            return view('companies', compact('companies'));
         }
     }
 
@@ -65,14 +68,14 @@ class EmpresasController extends Controller
             return redirect()->back()->withErrors($errors)->withInput();
         }
 
-        return redirect()->route('empresas');
+        return redirect()->route('companies');
     }
 
     public function update(Request $request)
     {
         // Validar la solicitud
         $validated = $request->validate([
-            'id' => 'required|exists:empresas,id',
+            'id' => 'required|exists:companies,id',
             'name' => 'required|string|max:255',
             'address' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
@@ -94,8 +97,8 @@ class EmpresasController extends Controller
             ]);
 
             if ($response->successful()) {
-                // Redirigir a la ruta 'empresas' si la solicitud es exitosa
-                return redirect()->route('empresas');
+                // Redirigir a la ruta 'companies' si la solicitud es exitosa
+                return redirect()->route('companies');
             } else {
                 // Manejar otro tipo de respuesta (opcional)
                 return response()->json([
@@ -144,8 +147,8 @@ class EmpresasController extends Controller
             return redirect()->back()->withErrors([$errorMessage])->withInput();
         }
 
-        // Redireccionar a la ruta 'empresas' si la eliminación fue exitosa
-        return redirect()->route('empresas')->with('success', 'Empresa eliminada correctamente');
+        // Redireccionar a la ruta 'companies' si la eliminación fue exitosa
+        return redirect()->route('companies')->with('success', 'Empresa eliminada correctamente');
     }
 
     public function selectEmpresa($id)
@@ -176,8 +179,8 @@ class EmpresasController extends Controller
 
     // Verificar el estado de la respuesta HTTP
     if ($response->successful()) {
-        // Redireccionar a la ruta 'empresas' si la selección fue exitosa
-        return redirect()->route('empresas')->with('success', 'Empresa seleccionada correctamente');
+        // Redireccionar a la ruta 'companies' si la selección fue exitosa
+        return redirect()->route('companies')->with('success', 'Empresa seleccionada correctamente');
     } else {
         // Manejar caso de respuesta no exitosa
         $errorResponse = $response->json(); // Obtener el cuerpo de la respuesta JSON si hay errores específicos

@@ -4,19 +4,11 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\EmpresasController;
+use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EquiposController;
 use App\Http\Controllers\MantenimientosController;
 
-
-
-
-// Route::get('/', function () {
-//     $response = Http::post('http://localhost:8000/api/login?email=ana.madrid@unison.mx&password=12345678');
-//     $data = $response->json();
-//     dd($data);
-// });
 Route::get('/', [UsersController::class, 'index']);
 Route::get('/login2', [UsersController::class, 'index2']);
 Route::get('/login', [UsersController::class, 'showLoginForm'])->name('login');
@@ -31,12 +23,12 @@ Route::delete('/usuarios/delete/{id}', [UsersController::class, 'destroy'])->nam
 Route::get('/logout', [UsersController::class, 'logout'])->name('logout');
 Route::post('/passwordRecovery', [UsersController::class, 'passwordRecovery'])->name('passwordRecovery');
 Route::get('/password_Recovery', [UsersController::class, 'password_Recovery'])->name('password_Recovery');
-Route::get('/empresas', [EmpresasController::class, 'getEmpresas'])->name('empresas');
-Route::post('/empresas', [EmpresasController::class, 'store'])->name('empresas.store');
-Route::post('/empresas/update', [EmpresasController::class, 'update'])->name('empresas.update');
-Route::get('/empresas/{id}', [EmpresasController::class, 'edit'])->name('empresas.edit');
-Route::delete('/empresas/delete/{id}', [EmpresasController::class, 'destroy'])->name('empresas.destroy');
-Route::post('/empresas/select/{id}', [EmpresasController::class, 'selectEmpresa'])->name('empresas.selectEmpresa');
+Route::get('/companies', [CompaniesController::class, 'getCompanies'])->name('companies');
+Route::post('/companies', [CompaniesController::class, 'store'])->name('companies.store');
+Route::post('/companies/update', [CompaniesController::class, 'update'])->name('companies.update');
+Route::get('/companies/{id}', [CompaniesController::class, 'edit'])->name('companies.edit');
+Route::delete('/companies/delete/{id}', [CompaniesController::class, 'destroy'])->name('companies.destroy');
+Route::post('/companies/select/{id}', [CompaniesController::class, 'selectEmpresa'])->name('companies.selectEmpresa');
 Route::get('/equipos', [EquiposController::class, 'getEquipos'])->name('equipos');
 Route::post('/equipos', [EquiposController::class, 'store'])->name('equipos.store');
 Route::post('/equipos', [EquiposController::class, 'update'])->name('equipos.update');

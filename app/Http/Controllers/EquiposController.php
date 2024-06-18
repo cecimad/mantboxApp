@@ -25,7 +25,6 @@ class EquiposController extends Controller
             // Si la solicitud de perfil es exitosa, carga la vista de perfil con los datos.
             // Verifica si hay empresas, si no, asigna un arreglo vacío
             $equipments = $data['data']['equipos'] ?? [];
-
             return view('/equipos', compact('equipments'));
         } 
         else {
