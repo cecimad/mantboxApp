@@ -39,6 +39,7 @@ Route::get('/google-callback', [LoginController::class, 'handleGoogleCallback'])
 Route::get('/maintenanceType', [MaintenanceTypeController::class, 'getMaintenanceType'])->name('maintenanceType');
 Route::post('/maintenanceType', [MaintenanceTypeController::class, 'store'])->name('maintenanceType.store');
 Route::put('/maintenanceType', [MaintenanceTypeController::class, 'update'])->name('maintenanceType.update');
+Route::delete('/maintenanceType/delete/{id}', [MaintenanceTypeController::class, 'destroy'])->name('maintenanceType.destroy');
 // Route::get('/users/{id}', function ($id) {
 //     $user = User::find($id);
 //     return response()->json([

@@ -48,8 +48,6 @@
                                     <a href="#" class="btn btn-primary btn-sm edit-maintenanceType-button" data-bs-toggle="modal" data-bs-target="#editMaintenanceTypeModal" data-id="{{ $maintenanceType['id'] }}" data-type_name="{{ $maintenanceType['type_name'] }}" data-description="{{ $maintenanceType['description'] }}">
                                         Editar
                                     </a>
-
-
                                     <form action="{{ url('/maintenanceType/delete', $maintenanceType['id']) }}" method="POST" style="display:inline;">
                                         @csrf
                                         @method('DELETE')
@@ -136,7 +134,4 @@
                 </div>
             </div>
         </div>
-
-
-
         @endsection
