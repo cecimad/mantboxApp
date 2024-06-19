@@ -114,11 +114,6 @@ class CompaniesController extends Controller
         }
     }
 
-    // Método en CompanyController
-    public function edit($id)
-    {
-    }
-
     public function destroy($id)
     {
         // Verificar si el ID proporcionado es numérico
@@ -152,41 +147,40 @@ class CompaniesController extends Controller
     }
 
     public function selectEmpresa($id)
-{
-    if (!is_numeric($id)) {
-        abort(400, 'Invalid ID supplied');
+    {
+        if (!is_numeric($id)) {
+            abort(400, 'Invalid ID supplied');
+        }
+
+        $url = env('URL_SERVER_API', 'http://127.0.0.1');
+
+        // Obtener el token de la sesión
+        $bearerToken = session('bearer_token');
+        try {
+            $response = Http::withHeaders([
+                'Authorization' => 'Bearer ' . $bearerToken, // Incluir el token de portador en el encabezado Authorization
+            ])->put($url . '/select-company', [
+                'company_id' => $id
+            ]);
+
+            // Verificar si la solicitud fue exitosa
+            $response->throw(); // Lanza una excepción si la solicitud no fue exitosa
+
+        } catch (\Throwable $e) {
+            // Capturar errores de la solicitud HTTP
+            $errorMessage = $e->getMessage();
+            return redirect()->back()->withErrors([$errorMessage])->withInput();
+        }
+
+        // Verificar el estado de la respuesta HTTP
+        if ($response->successful()) {
+            // Redireccionar a la ruta 'companies' si la selección fue exitosa
+            return redirect()->route('companies')->with('success', 'Empresa seleccionada correctamente');
+        } else {
+            // Manejar caso de respuesta no exitosa
+            $errorResponse = $response->json(); // Obtener el cuerpo de la respuesta JSON si hay errores específicos
+            $errorMessage = $errorResponse['message'] ?? 'Error al seleccionar la empresa';
+            return redirect()->back()->withErrors([$errorMessage])->withInput();
+        }
     }
-
-    $url = env('URL_SERVER_API', 'http://127.0.0.1');
-
-    // Obtener el token de la sesión
-    $bearerToken = session('bearer_token');
-    try {
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $bearerToken, // Incluir el token de portador en el encabezado Authorization
-        ])->post($url . '/select-company', [
-            'company_id' => $id
-        ]);
-
-        // Verificar si la solicitud fue exitosa
-        $response->throw(); // Lanza una excepción si la solicitud no fue exitosa
-
-    } catch (\Throwable $e) {
-        // Capturar errores de la solicitud HTTP
-        $errorMessage = $e->getMessage();
-        return redirect()->back()->withErrors([$errorMessage])->withInput();
-    }
-
-    // Verificar el estado de la respuesta HTTP
-    if ($response->successful()) {
-        // Redireccionar a la ruta 'companies' si la selección fue exitosa
-        return redirect()->route('companies')->with('success', 'Empresa seleccionada correctamente');
-    } else {
-        // Manejar caso de respuesta no exitosa
-        $errorResponse = $response->json(); // Obtener el cuerpo de la respuesta JSON si hay errores específicos
-        $errorMessage = $errorResponse['message'] ?? 'Error al seleccionar la empresa';
-        return redirect()->back()->withErrors([$errorMessage])->withInput();
-    }
-}
-
 }

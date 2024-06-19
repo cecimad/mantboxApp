@@ -125,7 +125,7 @@ class UsersController extends Controller
         // Realizar la solicitud HTTP POST con el token de autorización
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $bearerToken,
-        ])->post($url . '/register', [
+        ])->post($url . '/?', [
             'name' => $request->name,
             'email' => $request->email,
             'password' => $request->password,

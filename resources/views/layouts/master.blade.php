@@ -323,7 +323,7 @@
                   </a>
                 </li>
                 <li class="sidebar-item">
-                  <a href="{{ route('mantenimientos') }}" class="sidebar-link">
+                  <a href="{{ route('maintenanceType') }}" class="sidebar-link">
                     <i class="mdi mdi-adjust"></i>
                     <span class="hide-menu"> Mantenimientos </span>
                   </a>
@@ -846,6 +846,23 @@
       });
     });
   </script>
+<!-- Script para manejar el paso de datos al modal -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var editButtons = document.querySelectorAll('.edit-maintenanceType-button');
+        editButtons.forEach(function (button) {
+            button.addEventListener('click', function () {
+                var id = this.getAttribute('data-id');
+                var typeName = this.getAttribute('data-type_name');
+                var description = this.getAttribute('data-description');
+                
+                document.getElementById('edit-maintenance-type-id').value = id;
+                document.getElementById('edit-type_name').value = typeName;
+                document.getElementById('edit-description').value = description;
+            });
+        });
+    });
+</script>
 
 </body>
 

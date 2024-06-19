@@ -7,14 +7,14 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\CompaniesController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\EquipmentsController;
-use App\Http\Controllers\MantenimientosController;
+use App\Http\Controllers\MaintenanceTypeController;
 
 Route::get('/', [UsersController::class, 'index']);
 Route::get('/login2', [UsersController::class, 'index2']);
 Route::get('/login', [UsersController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [UsersController::class, 'login']);
 Route::get('/users', [UsersController::class, 'users'])->name('users');
-Route::get('/user', [UsersController::class, 'create']);
+Route::get('/user/create', [UsersController::class, 'create']);
 Route::post('/user', [UsersController::class, 'store'])->name('users.store');
 Route::get('/profile', [ProfileController::class, 'profile'])->name('profile');
 Route::post('/users/add', [UsersController::class, 'store'])->name('users.store');
@@ -34,15 +34,16 @@ Route::post('/equipments', [EquipmentsController::class, 'store'])->name('equipm
 Route::put('/equipments/update', [EquipmentsController::class, 'update'])->name('equipments.update');
 Route::delete('/equipments/delete/{id}', [EquipmentsController::class, 'destroy'])->name('equipments.destroy');
 Route::get('/login-google', [LoginController::class, 'redirectToGoogle'])->name('login-google');
+//Route::get('/callback-url', [LoginController::class, 'handleGoogleCallback']);
 Route::get('/google-callback', [LoginController::class, 'handleGoogleCallback']);
-Route::get('/mantenimientos', [MantenimientosController::class, 'getmantenimientos'])->name('mantenimientos');
-Route::post('/mantenimientos', [MantenimientosController::class, 'store'])->name('mantenimientos.store');
-Route::put('/mantenimientos', [MantenimientosController::class, 'update'])->name('mantenimientos.update');
-Route::get('/users/{id}', function ($id) {
-    $user = User::find($id);
-    return response()->json([
-        'name' => $user->name,
-        'email' => $user->email,
-        'roles' => $user->roles->pluck('name')->toArray() // Supongamos que tienes una relación roles en el modelo User
-    ]);
-});
+Route::get('/maintenanceType', [MaintenanceTypeController::class, 'getMaintenanceType'])->name('maintenanceType');
+Route::post('/maintenanceType', [MaintenanceTypeController::class, 'store'])->name('maintenanceType.store');
+Route::put('/maintenanceType', [MaintenanceTypeController::class, 'update'])->name('maintenanceType.update');
+// Route::get('/users/{id}', function ($id) {
+//     $user = User::find($id);
+//     return response()->json([
+//         'name' => $user->name,
+//         'email' => $user->email,
+//         'roles' => $user->roles->pluck('name')->toArray() // Supongamos que tienes una relación roles en el modelo User
+//     ]);
+// });

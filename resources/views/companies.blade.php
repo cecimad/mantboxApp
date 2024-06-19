@@ -54,7 +54,7 @@
 
 
                                     <!-- <a href="{{ url('/companies/update', $company['id']) }}" class="btn btn-primary btn-sm">Editar</a> -->
-                                    <a href="#" class="btn btn-primary btn-sm edit-user-button" data-bs-toggle="modal" data-bs-target="#editUserModal" data-id="{{ $user['id'] }}" data-name="{{ $user['name'] }}" data-email="{{ $user['email'] }}" data-roles="{{ implode(',', $user['roles']) }}">
+                                    <a href="#" class="btn btn-primary btn-sm edit-company-button" data-bs-toggle="modal" data-bs-target="#editCompanyModal" data-id="{{ $company['id'] }}" data-name="{{ $company['name'] }}" data-address="{{ $company['address'] }}" data-phone="{{ $company['phone'] }}">
                                         Editar
                                     </a>
                                     <form action="{{ url('/companies/delete', $company['id']) }}" method="POST" style="display:inline;">
@@ -115,51 +115,37 @@
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+<div class="modal fade" id="editCompanyModal" tabindex="-1" aria-labelledby="editCompanyModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Editar Usuario</h5>
+                <h5 class="modal-title" id="editCompanyModalLabel">Editar Empresa</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <!-- Mensajes de error -->
-                <div id="error-messages" class="alert alert-danger d-none"></div>
+                <div id="edit-error-messages" class="alert alert-danger d-none"></div>
                 <!-- Formulario -->
-                <form id="editUserForm" action="{{ route('users.update') }}" method="POST">
+                <form id="editCompanyForm" method="POST" action="{{ route('companies.update') }}">
                     @csrf
                     @method('PUT')
                     <!-- Campo para el nombre -->
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nombre</label>
-                        <input type="text" class="form-control" id="name" name="name" required>
+                        <label for="edit-name" class="form-label">Nombre</label>
+                        <input type="text" class="form-control" id="edit-name" name="name" required>
                     </div>
-                    <!-- Campo para el email -->
+                    <!-- Campo para la dirección -->
                     <div class="mb-3">
-                        <label for="email" class="form-label">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="email" name="email" required>
+                        <label for="edit-address" class="form-label">Dirección</label>
+                        <input type="text" class="form-control" id="edit-address" name="address" required>
                     </div>
-                    <!-- Campo para la nueva contraseña (opcional) -->
+                    <!-- Campo para el teléfono -->
                     <div class="mb-3">
-                        <label for="password" class="form-label">Nueva Contraseña (opcional)</label>
-                        <input type="password" class="form-control" id="password" name="password">
+                        <label for="edit-phone" class="form-label">Teléfono</label>
+                        <input type="text" class="form-control" id="edit-phone" name="phone" required>
                     </div>
-                    <!-- Confirmar nueva contraseña -->
-                    <div class="mb-3">
-                        <label for="password_confirmation" class="form-label">Confirmar Nueva Contraseña</label>
-                        <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
-                    </div>
-                    <!-- Selección del rol -->
-                    <div class="mb-3">
-                        <label for="rol" class="form-label">Rol</label>
-                        <select class="form-select" id="rol" name="rol[]" multiple required>
-                            <!-- Aquí puedes colocar opciones para los roles y marcar los seleccionados -->
-                            <option value="super-admin">Super Admin</option>
-                            <option value="admin">Admin</option>
-                            <option value="supervisor">Supervisor</option>
-                            <option value="user">Usuario</option>
-                        </select>
-                    </div>
+                    <!-- Campo oculto para el ID -->
+                    <input type="hidden" name="id" id="edit-company-id">
                     <!-- Botón para enviar el formulario -->
                     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
                 </form>
